@@ -33,7 +33,7 @@ export class Thing {
   limit: number
 
   @ObjectIDCollection()
-  asdfsad: number
+  badSchema: string[]
 }
 
 @Controller("/hello-world")
