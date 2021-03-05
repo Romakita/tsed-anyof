@@ -1,6 +1,28 @@
 import {Controller, Get, QueryParams} from "@tsed/common";
 import { Default, Maximum, Returns, Schema } from "@tsed/schema";
-import { ObjectIDCollection } from "../decorators/object-id-collection";
+import { useDecorators } from "@tsed/core";
+
+const pattern = '^[a-fA-F\\d]{24}$'
+
+export function ObjectIDCollection () {
+  return useDecorators(
+    Schema({
+      oneOf: [
+        {
+          type: 'string',
+          pattern,
+        },
+        {
+          type: 'array',
+          items: {
+            type: 'string',
+            pattern,
+          },
+        },
+      ],
+    }),
+  )
+}
 
 export class Thing {
   @Default(0)
@@ -11,7 +33,7 @@ export class Thing {
   limit: number
 
   @ObjectIDCollection()
-  asdfsad: number[]
+  asdfsad: number
 }
 
 @Controller("/hello-world")
